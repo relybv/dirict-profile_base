@@ -1,16 +1,8 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
+require 'beaker/puppet_install_helper'
 
-unless ENV['BEAKER_provision'] == 'no'
-  hosts.each do |host|
-    # Install Puppet
-    if host.is_pe?
-      install_pe
-    else
-      install_puppet
-    end
-  end
-end
+run_puppet_install_helper unless ENV['BEAKER_provision'] == 'no'
 
 RSpec.configure do |c|
   # Project root
@@ -24,9 +16,9 @@ RSpec.configure do |c|
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'profile_base')
     hosts.each do |host|
-      on host ,shell('mkdir -p /tmp/modules')
+      on(host ,'mkdir -p /tmp/modules')
       scp_to host, "#{proj_root}/spec/fixtures/modules", "/tmp", {:ignore => ["profile_base"]}
-      on host, shell('mv /tmp/modules/* /etc/puppet/modules')
+      on(host,'mv /tmp/modules/* /etc/puppet/modules')
     end
   end
 end
