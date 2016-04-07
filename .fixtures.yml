@@ -4,6 +4,7 @@ fixtures:
 
 # profile module layout, default include ntp module
     ntp: "https://github.com/puppetlabs/puppetlabs-ntp.git"
+    rsyslog: "https://github.com/saz/puppet-rsyslog.git"
 
   symlinks:
     profile_base: "#{source_dir}"

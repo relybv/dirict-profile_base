@@ -4,7 +4,15 @@
 #
 class profile_base::install {
 
-  package { $::profile_base::package_name:
-    ensure => present,
+  if $profile_base::monitor_address != undef {
+    class { 'rsyslog::client':
+      log_remote           => true,
+      spool_size           => '1g',
+      spool_timeoutenqueue => false,
+      remote_type          => 'tcp',
+      server               => $profile_base::monitor_address,
+      port                 => '514',
+    }
   }
+
 }

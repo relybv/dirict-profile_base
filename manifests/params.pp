@@ -4,6 +4,7 @@
 # It sets variables according to platform.
 #
 class profile_base::params {
+  $monitor_address = $::monitor_address
   case $::osfamily {
     'Debian': {
       $package_name = 'profile_base'

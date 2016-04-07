@@ -5,10 +5,4 @@
 #
 class profile_base::service {
 
-  service { $::profile_base::service_name:
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-  }
 }
