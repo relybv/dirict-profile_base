@@ -9,7 +9,7 @@
 
 
   param(
-    [string]$role = "profile_base",
+    [string]$role = "profile_base"
   )
 
   $puppet_source = "https://github.com/relybv/dirict-profile_base.git"
