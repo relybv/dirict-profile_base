@@ -21,6 +21,17 @@
     Exit 1
   }
 
+  # Install Chocolatey - ps1 will download from the url
+  Write-Host "Installing Chocolatey"
+  iex ((new-object net.webclient).DownloadString('http://bit.ly/psChocInstall'))
+Write-Host
+  if ($process.ExitCode -ne 0) {
+    Write-Host "Chocolatey installer failed."
+    Exit 1
+  }
+
+  Write-Host "Chocolatey successfully installed."
+
   # Install puppet - msiexec will download from the url
   $install_args = @("/qn", "/norestart","/i", $MsiUrl)
   Write-Host "Installing Puppet. Running msiexec.exe $install_args"
