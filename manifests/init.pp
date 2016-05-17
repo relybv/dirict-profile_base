@@ -12,21 +12,23 @@ class profile_base
   $monitor_address = $::profile_base::params::monitor_address,
 ) inherits ::profile_base::params {
 
+  # validate parameters here
+
   case $::operatingsystem {
     'Windows': {
       notify {'Install windows time service':}
+      class { '::profile_base::windows::install': } ->
+      class { '::profile_base::config::windows': } ~>
+      class { '::profile_base::windows::service': } ->
+      Class['::profile_base']
     }
     default: {
       include ntp
+      class { '::profile_base::install': } ->
+      class { '::profile_base::config': } ~>
+      class { '::profile_base::service': } ->
+      Class['::profile_base']
     }
   }
-
-  # validate parameters here
-
-  class { '::profile_base::install': } ->
-  class { '::profile_base::config': } ~>
-  class { '::profile_base::service': } ->
-  Class['::profile_base']
-
 
 }
