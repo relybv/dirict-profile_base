@@ -23,8 +23,8 @@
 
   # Install Chocolatey - ps1 will download from the url
   Write-Host "Installing Chocolatey"
-  iex ((new-object net.webclient).DownloadString('http://bit.ly/psChocInstall'))
-Write-Host
+  iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+
   if ($process.ExitCode -ne 0) {
     Write-Host "Chocolatey installer failed."
     Exit 1
