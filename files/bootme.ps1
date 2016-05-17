@@ -25,10 +25,10 @@
   Write-Host "Installing Chocolatey"
   iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 
-  if ($process.ExitCode -ne 0) {
-    Write-Host "Chocolatey installer failed."
-    Exit 1
-  }
+#  if ($process.ExitCode -ne 0) {
+#    Write-Host "Chocolatey installer failed."
+#    Exit 1
+#  }
 
   Write-Host "Chocolatey successfully installed."
 
