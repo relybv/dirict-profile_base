@@ -1,0 +1,14 @@
+HOSTS:
+  windows-server-2012r2-x64:
+    roles:
+      - agent
+    platform: windows-server-amd64
+    flavor: ha_localdisk.2c.4r.60h
+    hypervisor: openstack
+    image: "Windows Server 2012 R2 Std Eval"
+    user: admin
+
+CONFIG:
+  log_level: verbose
+  type: foss
+  openstack_network: internal

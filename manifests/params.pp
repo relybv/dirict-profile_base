@@ -9,6 +9,7 @@ class profile_base::params {
   $ubuntu_packages = ['procps']
   $debian_packages = ['procps']
   $redhat_packages =  ['nano', 'vmstat', 'top']
+  $windows_packages = ['notepad']
 
   case $::operatingsystem {
     'Debian': {
@@ -19,6 +20,9 @@ class profile_base::params {
     }
     'RedHat', 'CentOS': {
       $packages = $redhat_packages
+    }
+    'Windows': {
+      $packages = $windows_packages
     }
     default: {
       fail("${::operatingsystem} not supported")
