@@ -12,7 +12,14 @@ class profile_base
   $monitor_address = $::profile_base::params::monitor_address,
 ) inherits ::profile_base::params {
 
-  include ntp
+  case $::operatingsystem {
+    'Windows': {
+      notify {'Install windows time service':}
+    }
+    default: {
+      include ntp
+    }
+  }
 
   # validate parameters here
 
