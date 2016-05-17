@@ -4,6 +4,10 @@
 #
 class profile_base::install {
 
+  # install packages
+  ensure_packages( $::profile_base::packages )
+
+  # if monitor address is defined use it as syslogserver
   if $profile_base::monitor_address != undef {
     class { 'rsyslog::client':
       log_remote           => true,

@@ -5,14 +5,20 @@
 #
 class profile_base::params {
   $monitor_address = $::monitor_address
-  case $::osfamily {
+
+  $ubuntu_packages = ['procps']
+  $debian_packages = ['procps']
+  $redhat_packages =  ['nano', 'vmstat', 'top']
+
+  case $::operatingsystem {
     'Debian': {
-      $package_name = 'profile_base'
-      $service_name = 'profile_base'
+      $packages = $debian_packages
     }
-    'RedHat', 'Amazon': {
-      $package_name = 'profile_base'
-      $service_name = 'profile_base'
+    'Ubuntu': {
+      $packages = $ubuntu_packages
+    }
+    'RedHat', 'CentOS': {
+      $packages = $redhat_packages
     }
     default: {
       fail("${::operatingsystem} not supported")
