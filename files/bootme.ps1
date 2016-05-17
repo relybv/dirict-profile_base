@@ -47,19 +47,17 @@
 
   Write-Host "Git successfully installed."
  
-  if (Test-Path "${Env:ProgramFiles(x86)}\Git\bin\git.exe") {
-    $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\puppet\etc\modules\profile_base" )
-    Write-Host "Cloning $clone_args"
-    $process = Start-Process -FilePath "${Env:ProgramFiles(x86)}\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
-    if ($process.ExitCode -ne 0) {
-      Write-Host "Git clone failed."
-      Exit 1
-    }
+  $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
+  Write-Host "Cloning $clone_args"
+  $process = Start-Process -FilePath "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
+  if ($process.ExitCode -ne 0) {
+    Write-Host "Git clone failed."
+    Exit 1
   }
 
   Write-Host "Repo successfully cloned."
 
-  $puppet_args = @("apply","--modulepath=C:\ProgramData\PuppetLabs\puppet\etc\modules","-e","`"include $role`"" )
+  $puppet_args = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_args"
 #  $process = Start-Process -FilePath "${Env:ProgramFiles(x86)}\Puppet Labs\Puppet\bin\puppet.bat" -ArgumentList $puppet_args -Wait -PassThru
   $process = Start-Process -FilePath "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" -ArgumentList $puppet_args -Wait -PassThru
