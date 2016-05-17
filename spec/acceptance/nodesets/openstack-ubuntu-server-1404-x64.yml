@@ -11,4 +11,4 @@ HOSTS:
 CONFIG:
   log_level: verbose
   type: foss
-  openstack_network: zooi.network
+  openstack_network: internal
