@@ -18,7 +18,7 @@ class profile_base
     'Windows': {
       notify {'Install windows time service':}
       class { '::profile_base::windows::install': } ->
-      class { '::profile_base::config::windows': } ~>
+      class { '::profile_base::windows::config': } ~>
       class { '::profile_base::windows::service': } ->
       Class['::profile_base']
     }
