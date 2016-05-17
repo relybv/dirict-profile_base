@@ -16,7 +16,6 @@ class profile_base
 
   case $::operatingsystem {
     'Windows': {
-      notify {'Install windows time service':}
       class { '::profile_base::windows::install': } ->
       class { '::profile_base::windows::config': } ~>
       class { '::profile_base::windows::service': } ->
