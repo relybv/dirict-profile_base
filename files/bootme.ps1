@@ -13,7 +13,7 @@
   )
 
   $puppet_source = "https://github.com/relybv/dirict-profile_base.git"
-  $MsiUrl = "https://downloads.puppetlabs.com/windows/puppet-3.8.7-x64.msi"
+  $MsiUrl = "https://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi"
 
   $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
   if (! ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
@@ -48,7 +48,7 @@
   Write-Host "Git successfully installed."
  
   if (Test-Path "${Env:ProgramFiles(x86)}\Git\bin\git.exe") {
-    $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\puppet\etc\modules" )
+    $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\puppet\etc\modules\profile_base" )
     Write-Host "Cloning $clone_args"
     $process = Start-Process -FilePath "${Env:ProgramFiles(x86)}\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
     if ($process.ExitCode -ne 0) {
