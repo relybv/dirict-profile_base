@@ -14,7 +14,7 @@ class profile_base::windows::install {
     nxlog::input {'eventlogs':
       input_name   => 'eventlogs',
       input_module => 'im_msvistalog',
-      query        => '<QueryList><Query Id="0"><Select Path="Application">*</Select><Select Path="Security">*</Select><Select Path="System">*</Select></Query>y</QueryList>',
+#      query        => '<QueryList><Query Id="0"><Select Path="Application">*</Select><Select Path="Security">*</Select><Select Path="System">*</Select></Query>y</QueryList>',
     }
     nxlog::output {'out':
       output_name   => 'out',
