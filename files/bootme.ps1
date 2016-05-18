@@ -65,12 +65,26 @@
   Write-Host "Repo successfully cloned."
 
   # import certificate
+  $CertUrl = "https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem"
+  $TempDir = [System.IO.Path]::GetTempPath()
+  $TempCert = $TempDir + "/GeoTrust_Global_CA.pem"
+  Write-Host "Downloading Certificate to $TempCert"
+  $client = new-object System.Net.WebClient
+  $client.DownloadFile( $CertUrl, $TempCert )
+  $install_args = @("certutil","-v","-addstore","Root","GeoTrust_Global_CA.pem")
+  $process = Start-Process -FilePath $TempGit -ArgumentList $install_args -Wait -PassThru
+  if ($process.ExitCode -ne 0) {
+    Write-Host "Certificate installer failed."
+    Exit 1
+  }
+  Write-Host ""Certificate successfully installed."
+
   # https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
   # certutil -v -addstore Root GeoTrust_Global_CA.pem
 
   # install puppet windws modules
-  puppet module install puppetlabs/stdlib
-  puppet module install chocolatey/chocolatey
+  "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" module install puppetlabs/stdlib
+  "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" module install chocolatey/chocolatey
   
 
   $puppet_args = @("apply","-e","`"include $role`"" )
