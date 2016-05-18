@@ -50,9 +50,9 @@
   CMD.EXE /C "certutil -v -addstore Root" $TempCert
 
   # install puppet windws modules
-  CMD.EXE /C "puppet.bat module install puppetlabs/stdlib"
-  CMD.EXE /C "puppet.bat module install chocolatey/chocolatey"
+  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` puppetlabs/stdlib'
+  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` chocolatey/chocolatey'
   
   $puppet_args = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_args"
-  CMD.EXE /C "puppet.bat" $puppet_args
+  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat' $puppet_args
