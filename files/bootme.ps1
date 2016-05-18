@@ -24,39 +24,36 @@
   # Install Chocolatey - ps1 will download from the url
   Write-Host "Installing Chocolatey"
   iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
-
-#  if ($process.ExitCode -ne 0) {
-#    Write-Host "Chocolatey installer failed."
-#    Exit 1
-#  }
-
   Write-Host "Chocolatey successfully installed."
 
+  Write-Host "Installing packages using Chocolatey"
+  choco install git -y
+  choco install puppet-agent
+
+
   # Install puppet - msiexec will download from the url
-  $install_args = @("/qn", "/norestart","/i", $MsiUrl)
-  Write-Host "Installing Puppet. Running msiexec.exe $install_args"
-  $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
-  if ($process.ExitCode -ne 0) {
-    Write-Host "Puppet installer failed."
-    Exit 1
-  }
+#  $install_args = @("/qn", "/norestart","/i", $MsiUrl)
+#  Write-Host "Installing Puppet. Running msiexec.exe $install_args"
+#  $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
+#  if ($process.ExitCode -ne 0) {
+#    Write-Host "Puppet installer failed."
+#    Exit 1
+#  }
+#  Write-Host "Puppet successfully installed."
 
-  Write-Host "Puppet successfully installed."
-
-  $GitUrl = "https://github.com/git-for-windows/git/releases/download/v2.7.2.windows.1/Git-2.7.2-64-bit.exe"
-  $TempDir = [System.IO.Path]::GetTempPath()
-  $TempGit = $TempDir + "/Git-2.7.2-64-bit.exe"
-  Write-Host "Downloading Git to $TempGit"
-  $client = new-object System.Net.WebClient
-  $client.DownloadFile( $GitUrl, $TempGit )
-  $install_args = @("/SP","/VERYSILENT","/SUPPRESSMSGBOXES","/CLOSEAPPLICATIONS","/NOICONS")
-  $process = Start-Process -FilePath $TempGit -ArgumentList $install_args -Wait -PassThru
-  if ($process.ExitCode -ne 0) {
-    Write-Host "Git installer failed."
-    Exit 1
-  }
-
-  Write-Host "Git successfully installed."
+#  $GitUrl = "https://github.com/git-for-windows/git/releases/download/v2.7.2.windows.1/Git-2.7.2-64-bit.exe"
+#  $TempDir = [System.IO.Path]::GetTempPath()
+#  $TempGit = $TempDir + "/Git-2.7.2-64-bit.exe"
+#  Write-Host "Downloading Git to $TempGit"
+#  $client = new-object System.Net.WebClient
+#  $client.DownloadFile( $GitUrl, $TempGit )
+#  $install_args = @("/SP","/VERYSILENT","/SUPPRESSMSGBOXES","/CLOSEAPPLICATIONS","/NOICONS")
+#  $process = Start-Process -FilePath $TempGit -ArgumentList $install_args -Wait -PassThru
+#  if ($process.ExitCode -ne 0) {
+#    Write-Host "Git installer failed."
+#    Exit 1
+#  }
+#  Write-Host "Git successfully installed."
  
   $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
   Write-Host "Cloning $clone_args"
@@ -65,8 +62,16 @@
     Write-Host "Git clone failed."
     Exit 1
   }
-
   Write-Host "Repo successfully cloned."
+
+  # import certificate
+  # https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
+  # certutil -v -addstore Root GeoTrust_Global_CA.pem
+
+  # install puppet windws modules
+  puppet module install puppetlabs/stdlib
+  puppet module install chocolatey/chocolatey
+  
 
   $puppet_args = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_args"
