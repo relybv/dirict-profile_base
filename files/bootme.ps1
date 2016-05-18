@@ -30,31 +30,6 @@
   choco install git -y
   choco install puppet-agent -y
 
-
-  # Install puppet - msiexec will download from the url
-#  $install_args = @("/qn", "/norestart","/i", $MsiUrl)
-#  Write-Host "Installing Puppet. Running msiexec.exe $install_args"
-#  $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
-#  if ($process.ExitCode -ne 0) {
-#    Write-Host "Puppet installer failed."
-#    Exit 1
-#  }
-#  Write-Host "Puppet successfully installed."
-
-#  $GitUrl = "https://github.com/git-for-windows/git/releases/download/v2.7.2.windows.1/Git-2.7.2-64-bit.exe"
-#  $TempDir = [System.IO.Path]::GetTempPath()
-#  $TempGit = $TempDir + "/Git-2.7.2-64-bit.exe"
-#  Write-Host "Downloading Git to $TempGit"
-#  $client = new-object System.Net.WebClient
-#  $client.DownloadFile( $GitUrl, $TempGit )
-#  $install_args = @("/SP","/VERYSILENT","/SUPPRESSMSGBOXES","/CLOSEAPPLICATIONS","/NOICONS")
-#  $process = Start-Process -FilePath $TempGit -ArgumentList $install_args -Wait -PassThru
-#  if ($process.ExitCode -ne 0) {
-#    Write-Host "Git installer failed."
-#    Exit 1
-#  }
-#  Write-Host "Git successfully installed."
- 
   $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
   Write-Host "Cloning $clone_args"
   $process = Start-Process -FilePath "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
@@ -75,10 +50,9 @@
   CMD.EXE /C "certutil -v -addstore Root" $TempCert
 
   # install puppet windws modules
-  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat module install puppetlabs/stdlib"
-  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat module install chocolatey/chocolatey"
+  CMD.EXE /C "puppet.bat module install puppetlabs/stdlib"
+  CMD.EXE /C "puppet.bat module install chocolatey/chocolatey"
   
-
   $puppet_args = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_args"
-  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" $puppet_args
+  CMD.EXE /C "puppet.bat" $puppet_args
