@@ -53,7 +53,8 @@
   $puppet_path = "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat"
   $puppet_modinst = "module install"
   $puppet_module = "puppetlabs/stdlib"
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_modinst $puppet_module -Wait -PassThru
+  $puppet_arg = $puppet_modinst + $puppet_module
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
 #  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` puppetlabs/stdlib'
 #  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` chocolatey/chocolatey'
   
