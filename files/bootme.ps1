@@ -51,7 +51,7 @@
 
   # install puppet windws modules
   $puppet_path = "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat"
-  $puppet_modinst = "module install"
+  $puppet_modinst = "module install "
   $puppet_module = "puppetlabs/stdlib"
   $puppet_arg = $puppet_modinst + $puppet_module
   $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
@@ -61,9 +61,22 @@
   }
   Write-Host "$puppet_module successfully installed."
 
-#  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` puppetlabs/stdlib'
-#  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat` module` install` chocolatey/chocolatey'
-  
-  $puppet_args = @("apply","-e","`"include $role`"" )
-  Write-Host "Running puppet $puppet_args"
-#  CMD.EXE /C 'C:\Program` Files\Puppet` Labs\Puppet\bin\puppet.bat' $puppet_args
+  $puppet_module = "chocolatey/chocolatey"
+  $puppet_arg = $puppet_modinst + $puppet_module
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  if ($process.ExitCode -ne 0) {
+    Write-Host "Install of $puppet_module failed."
+    Exit 1
+  }
+  Write-Host "$puppet_module successfully installed."
+
+  # running puppet apply  
+  $puppet_arg = @("apply","-e","`"include $role`"" )
+  Write-Host "Running puppet $puppet_arg"
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  if ($process.ExitCode -ne 0) {
+    Write-Host "puppet apply failed."
+    Exit 1
+  }
+  Write-Host "puppet apply OK"
+
