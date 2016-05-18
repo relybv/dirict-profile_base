@@ -83,8 +83,8 @@
   # certutil -v -addstore Root GeoTrust_Global_CA.pem
 
   # install puppet windws modules
-  "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" module install puppetlabs/stdlib
-  "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" module install chocolatey/chocolatey
+  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat module install puppetlabs/stdlib"
+  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat module install chocolatey/chocolatey"
   
 
   $puppet_args = @("apply","-e","`"include $role`"" )
