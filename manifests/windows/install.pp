@@ -18,7 +18,7 @@ class profile_base::windows::install {
     }
     nxlog::output {'out':
       output_name   => 'out',
-      output_module => 'om_udp',
+      output_module => 'om_tcp',
       output_host    => '172.16.20.201',
       output_port   => '514',
       output_exec   => 'to_syslog();',
