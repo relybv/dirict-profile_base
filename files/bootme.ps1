@@ -28,7 +28,7 @@
 
   Write-Host "Installing packages using Chocolatey"
   choco install git -y
-  choco install puppet-agent
+  choco install puppet-agent -y
 
 
   # Install puppet - msiexec will download from the url
