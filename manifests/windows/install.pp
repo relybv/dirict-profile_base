@@ -21,7 +21,7 @@ class profile_base::windows::install {
       output_module => 'om_tcp',
       output_host    => '172.16.20.201',
       output_port   => '514',
-      output_exec   => '$Hostname = hostname(); $raw_event = $Hostname + " " + $raw_event;',
+      output_exec   => 'to_syslog_snare();',
     }
     # must route to existing output defined above
     nxlog::route {'route1':
