@@ -81,9 +81,4 @@
 
   $puppet_args = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_args"
-#  $process = Start-Process -FilePath "${Env:ProgramFiles(x86)}\Puppet Labs\Puppet\bin\puppet.bat" -ArgumentList $puppet_args -Wait -PassThru
-  $process = Start-Process -FilePath "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" -ArgumentList $puppet_args -Wait -PassThru
-  if ($process.ExitCode -ne 0) {
-    Write-Host "Puppet apply failed."
-    Exit 1
-  }
+  CMD.EXE /C "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" $puppet_args
