@@ -77,7 +77,7 @@
     Write-Host "Certificate installer failed."
     Exit 1
   }
-  Write-Host ""Certificate successfully installed."
+  Write-Host "Certificate successfully installed."
 
   # https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
   # certutil -v -addstore Root GeoTrust_Global_CA.pem
