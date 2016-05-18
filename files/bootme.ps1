@@ -1,6 +1,6 @@
 #ps1
 
-# This script installs puppet 3.x and deploy the manifest using puppet apply -e "include profile_base"
+# This script installs puppet 4.x and deploy the manifest using puppet apply -e "include profile_base"
 # Usage:
 # <powershell>
 # Set-ExecutionPolicy Unrestricted -Force
@@ -13,8 +13,8 @@
   )
 
   $puppet_source = "https://github.com/relybv/dirict-profile_base.git"
-  $MsiUrl = "https://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi"
 
+  # check admin rights
   $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
   if (! ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
     Write-Host -ForegroundColor Red "You must run this script as an administrator."
@@ -24,14 +24,14 @@
   # Install Chocolatey - ps1 will download from the url
   Write-Host "Installing Chocolatey"
   iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
-  Write-Host "Chocolatey successfully installed."
 
   Write-Host "Installing packages using Chocolatey"
   choco install git -y
   choco install puppet-agent -y
 
-  $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
+  # cloning repo
   Write-Host "Cloning $clone_args"
+  $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
   $process = Start-Process -FilePath "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
   if ($process.ExitCode -ne 0) {
     Write-Host "Git clone failed."
