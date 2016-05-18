@@ -70,7 +70,7 @@
   }
   Write-Host "$puppet_module successfully installed."
 
-  $puppet_module = "puppetlabs/tse-module-shortcut"
+  $puppet_module = "dschaaff/nxlog"
   $puppet_arg = $puppet_modinst + $puppet_module
   $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
   if ($process.ExitCode -ne 0) {
