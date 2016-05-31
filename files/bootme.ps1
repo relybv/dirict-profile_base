@@ -79,6 +79,16 @@
   }
   Write-Host "$puppet_module successfully installed."
 
+  $puppet_module = "puppetlabs/motd"
+  $puppet_arg = $puppet_modinst + $puppet_module
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  if ($process.ExitCode -ne 0) {
+    Write-Host "Install of $puppet_module failed."
+    Exit 1
+  }
+  Write-Host "$puppet_module successfully installed."
+
+
   # running puppet apply  
   $puppet_arg = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_arg"
