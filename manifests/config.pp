@@ -15,11 +15,13 @@ class profile_base::config {
     creates => '/opt/puppetlabs/facter/facts.d/fromexport.yaml',
   }
 
+  $sedstr1 = 's/=/:/g'
+  $swedstr2 = 's/"/ /g'
   exec { 'save_facts':
     path        => ['/usr/bin', '/bin'],
     cwd         => '/opt/puppetlabs/facter/facts.d',
     provider    => shell,
-    command     => 'export|grep FACTER |cut -d _ -f 2,3 | sed \'s/=/:/g\' | sed \'s/"/ /g\' >> fromexport.yaml',
+    command     => "export|grep FACTER |cut -d _ -f 2,3 | sed $sedstr1 | sed $swedstr2 >> fromexport.yaml",
     subscribe   => Exec[ 'create_fact_file' ],
     refreshonly => true,
   }
