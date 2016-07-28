@@ -16,7 +16,7 @@ class profile_base::config {
   }
 
   $sedstr1 = 's/=/:/g'
-  $swedstr2 = 's/"/ /g'
+  $swedstr2 = 's/\"/\ /g'
   exec { 'save_facts':
     path        => ['/usr/bin', '/bin'],
     cwd         => '/opt/puppetlabs/facter/facts.d',
