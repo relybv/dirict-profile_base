@@ -15,8 +15,8 @@ class profile_base::config {
     creates => '/opt/puppetlabs/facter/facts.d/fromexport.yaml',
   }
 
-  $sedstr1 = 's/=/:/g'
-  $swedstr2 = 's/\"/\ /g'
+  $sedstr1 = '\'s/=/:/g\''
+  $swedstr2 = '\'s/"/ /g\''
   exec { 'save_facts':
     path        => ['/usr/bin', '/bin'],
     cwd         => '/opt/puppetlabs/facter/facts.d',
