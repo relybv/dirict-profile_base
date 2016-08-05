@@ -13,6 +13,9 @@ class profile_base
 ) inherits ::profile_base::params {
 
   # validate parameters here
+  if $monitor_address != undef {
+    validate_string($monitor_address)
+  }
 
   case $::operatingsystem {
     'Windows': {
