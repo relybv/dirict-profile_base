@@ -26,7 +26,7 @@ class profile_base::config {
     path        => ['/usr/bin', '/bin'],
     cwd         => '/opt/puppetlabs/facter/facts.d',
     provider    => posix,
-    command     => "/bin/bash -c export|grep FACTER |cut -d _ -f 2,3 | sed ${sedstr1} | sed ${swedstr2} >> fromexport.yaml",
+    command     => "/bin/bash -c export|grep FACTER |cut -d _ -f 2,3,4,5 | sed ${sedstr1} | sed ${swedstr2} >> fromexport.yaml",
     subscribe   => Exec[ 'create_fact_file' ],
     refreshonly => true,
   }
