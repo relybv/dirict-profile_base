@@ -1,7 +1,8 @@
 fixtures:
-  repositories:
-    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+  forge_modules:
+    stdlib: "puppetlabs/stdlib"
 
+  repositories:
 # profile module layout, default include ntp module
     ntp: "https://github.com/puppetlabs/puppetlabs-ntp.git"
     rsyslog: "https://github.com/saz/puppet-rsyslog.git"
