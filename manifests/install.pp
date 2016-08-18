@@ -8,8 +8,15 @@ class profile_base::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+
+  # prefer ipv4
+  class { 'gai::preferipv4': }
+
   # install packages
-  ensure_packages( $::profile_base::packages )
+  ensure_packages($::profile_base::packages, {
+    'ensure'  => 'latest',
+    'require' => Class['gai::preferipv4'],
+  })
 
   # if monitor address is defined use it as syslogserver
   if $profile_base::monitor_address != undef {

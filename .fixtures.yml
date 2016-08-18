@@ -7,6 +7,7 @@ fixtures:
     ntp: "https://github.com/puppetlabs/puppetlabs-ntp.git"
     rsyslog: "https://github.com/saz/puppet-rsyslog.git"
     motd: "https://github.com/puppetlabs/puppetlabs-motd.git"
+    gai: "https://github.com/smoeding/puppet-gai.git"
 
   symlinks:
     profile_base: "#{source_dir}"
