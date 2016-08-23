@@ -30,5 +30,5 @@ class profile_base::config {
     subscribe   => Exec[ 'create_fact_file' ],
     refreshonly => true,
   }
-    
+
 }
