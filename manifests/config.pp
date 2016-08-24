@@ -9,7 +9,7 @@ class profile_base::config {
   }
 
   class { 'motd':
-    content => 'This host is under control of puppet/nPlease do not change the configuration manual/n',
+    content => 'This host is under control of puppet, please do not change the configuration manual',
   }
 
   # save exported facts provided at provisioning to custom facts
