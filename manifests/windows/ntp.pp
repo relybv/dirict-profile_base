@@ -12,7 +12,7 @@ class profile_base::windows::ntp(
 #    $timezone   = 'Eastern Standard Time'
 
   exec {'set_time_zone':
-    command => "C:\\windows\\system32\\tzutil.exe /s \"${::timezone}\"",
+    command => "C:\\windows\\system32\\tzutil.exe /s \"${timezone}\"",
     before  => Service['w32time'],
   }
 
