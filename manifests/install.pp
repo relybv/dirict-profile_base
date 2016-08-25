@@ -8,6 +8,7 @@ class profile_base::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  include ntp
 
   # prefer ipv4
   class { 'gai::preferipv4': }

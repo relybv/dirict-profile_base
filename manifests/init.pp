@@ -25,7 +25,6 @@ class profile_base
       Class['::profile_base']
     }
     default: {
-      include ntp
       class { '::profile_base::install': } ->
       class { '::profile_base::config': } ~>
       class { '::profile_base::service': } ->
