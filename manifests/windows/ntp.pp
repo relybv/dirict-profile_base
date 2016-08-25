@@ -23,7 +23,7 @@ class profile_base::windows::ntp(
   }
 
   exec { 'set_time_peer':
-    command   => "C:\\windows\\system32\\w32tm.exe /config /manualpeerlist:${::wintimeserver} /syncfromflags:MANUAL",
+    command   => "C:\\windows\\system32\\w32tm.exe /config /manualpeerlist:${::timeserver} /syncfromflags:MANUAL",
     before    => Exec['w32tm_update_time'],
     logoutput => true,
     timeout   => '60',
