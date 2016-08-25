@@ -4,7 +4,7 @@
 # Usage:
 # <powershell>
 # Set-ExecutionPolicy Unrestricted -Force
-# icm $executioncontext.InvokeCommand.NewScriptBlock((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/relybv/profile_base/master/files/bootme.ps1')) -ArgumentList ("profile_base")
+# icm $executioncontext.InvokeCommand.NewScriptBlock((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/relybv/dirict-profile_base/master/files/bootme.ps1')) -ArgumentList ("profile_base")
 #</powershell>
 
 
@@ -23,16 +23,22 @@
 
   # Install Chocolatey - ps1 will download from the url
   Write-Host "Installing Chocolatey"
-  iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
   Write-Host "Installing packages using Chocolatey"
-  choco install git -y
-  choco install puppet-agent -y
+  choco install git -y --allow-empty-checksums --force
+  choco install puppet-agent -y --allow-empty-checksums --force
 
-  # cloning repo
-  Write-Host "Cloning $clone_args"
-  $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
-  $process = Start-Process -FilePath "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru
+  # cloning or pull repo
+  if(!(Test-Path -Path "C:\ProgramData\PuppetLabs\code\modules\profile_base" )){
+    $clone_args = @("clone",$puppet_source,"C:\ProgramData\PuppetLabs\code\modules\profile_base" )
+  } else {
+    $clone_args = @("pull")
+    Set-Location -Path "C:\ProgramData\PuppetLabs\code\modules\profile_base"
+  }
+ 
+  Write-Host "git $clone_args"
+  $process = Start-Process -FilePath "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone_args -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "Git clone failed."
     Exit 1
@@ -46,15 +52,14 @@
   Write-Host "Downloading Certificate to $TempCert"
   $client = new-object System.Net.WebClient
   $client.DownloadFile( $CertUrl, $TempCert )
-
-  CMD.EXE /C "certutil -v -addstore Root" $TempCert
+  certutil -v -addstore Root $TempCert
 
   # install puppet windws modules
   $puppet_path = "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat"
   $puppet_modinst = "module install "
   $puppet_module = "puppetlabs/stdlib"
   $puppet_arg = $puppet_modinst + $puppet_module
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "Install of $puppet_module failed."
     Exit 1
@@ -63,7 +68,7 @@
 
   $puppet_module = "chocolatey/chocolatey"
   $puppet_arg = $puppet_modinst + $puppet_module
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "Install of $puppet_module failed."
     Exit 1
@@ -72,7 +77,7 @@
 
   $puppet_module = "dschaaff/nxlog"
   $puppet_arg = $puppet_modinst + $puppet_module
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "Install of $puppet_module failed."
     Exit 1
@@ -81,21 +86,19 @@
 
   $puppet_module = "puppetlabs/motd"
   $puppet_arg = $puppet_modinst + $puppet_module
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "Install of $puppet_module failed."
     Exit 1
   }
   Write-Host "$puppet_module successfully installed."
 
-
   # running puppet apply  
   $puppet_arg = @("apply","-e","`"include $role`"" )
   Write-Host "Running puppet $puppet_arg"
-  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru
+  $process = Start-Process -FilePath $puppet_path -ArgumentList $puppet_arg -Wait -PassThru -NoNewWindow
   if ($process.ExitCode -ne 0) {
     Write-Host "puppet apply failed."
     Exit 1
   }
   Write-Host "puppet apply OK"
-
