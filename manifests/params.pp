@@ -5,12 +5,12 @@
 #
 class profile_base::params {
   $monitor_address = $::monitor_address
-
   $ubuntu_packages = ['procps']
   $debian_packages = ['procps']
   $redhat_packages =  ['nano', 'vmstat', 'top']
   $windows_packages = ['notepad']
-
+  $wintimeserver = '0.nl.pool.ntp.org'
+  $wintimezone   = 'W. Europe Standard Time'
   case $::operatingsystem {
     'Debian': {
       $packages = $debian_packages

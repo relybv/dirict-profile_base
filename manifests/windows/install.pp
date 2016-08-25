@@ -12,6 +12,7 @@ class profile_base::windows::install {
   include chocolatey
   Package { provider => chocolatey, }
 
+  include windows/ntp
   # if monitor address is defined use it as syslogserver
   if $profile_base::monitor_address != undef {
     include nxlog
