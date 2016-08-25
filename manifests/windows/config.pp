@@ -9,6 +9,6 @@ class profile_base::windows::config {
   }
 
   class { 'motd':
-    content => 'This host is under control of puppet, xipPlease do not change the configuration manual',
+    content => 'This host is under control of puppet, please do not change the configuration manual',
   }
 }
