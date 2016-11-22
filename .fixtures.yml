@@ -3,7 +3,9 @@ fixtures:
     stdlib:
       repo: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
       ref: "4.12.0"
-    ntp: "https://github.com/puppetlabs/puppetlabs-ntp.git"
+    ntp: 
+      repo: "https://github.com/puppetlabs/puppetlabs-ntp.git"
+      ref: "4.2.0"
     rsyslog: "https://github.com/saz/puppet-rsyslog.git"
     motd: "https://github.com/puppetlabs/puppetlabs-motd.git"
     gai: "https://github.com/smoeding/puppet-gai.git"
