@@ -12,3 +12,4 @@ CONFIG:
   log_level: info
   type: foss
   openstack_network: internal
+  color: false
