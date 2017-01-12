@@ -9,6 +9,6 @@ HOSTS:
     user: ubuntu
 
 CONFIG:
-  log_level: verbose
+  log_level: info
   type: foss
   openstack_network: internal
