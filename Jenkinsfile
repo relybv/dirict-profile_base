@@ -1,5 +1,5 @@
 node {
-   def mvnHome
+   properties([parameters([string(defaultValue: 'https://access.openstack.rely.nl:5000/v2.0', description: '', name: 'OS_AUTH_URL'), string(defaultValue: 'lab', description: '', name: 'OS_TENANT_NAME'), string(defaultValue: '10593dbf4f8d4296a25cf942f0567050', description: '', name: 'OS_TENANT_ID'), string(defaultValue: 'paul.gomersbach', description: '', name: 'OS_USERNAME'), string(defaultValue: 'RegionOne', description: '', name: 'OS_REGION_NAME'), [$class: 'CredentialsParameterDefinition', credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: 'OS_PASSWORD', description: '', name: 'OS_PASSWORD', required: false]]), disableConcurrentBuilds(), pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
    stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/relybv/dirict-profile_base.git'
