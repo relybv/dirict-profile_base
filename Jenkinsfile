@@ -8,6 +8,7 @@ node {
       sh 'cd $WORKSPACE'
       sh '/usr/bin/bundle install --path vendor/bundle'
       sh '/opt/puppetlabs/puppet/bin/rake spec_prep'
+      sh 'printenv'
    }
    stage('Syntax') {
       sh '/usr/bin/bundle exec rake syntax'
