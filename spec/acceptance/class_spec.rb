@@ -18,8 +18,8 @@ describe 'profile_base class' do
         EOS
 
         # Run it twice and test for idempotency
-        apply_manifest(pp, :catch_failures => true, :future_parser => true)
-        apply_manifest(pp, :catch_changes  => true, :future_parser => true)
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes  => true)
       end
     end
 
