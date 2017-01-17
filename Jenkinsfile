@@ -1,5 +1,6 @@
 node {
-  properties([parameters([string(defaultValue: 'https://access.openstack.rely.nl:5000/v2.0', description: '', name: 'OS_AUTH_URL'), string(defaultValue: 'lab', description: '', name: 'OS_TENANT_NAME'), string(defaultValue: '10593dbf4f8d4296a25cf942f0567050', description: '', name: 'OS_TENANT_ID'), string(defaultValue: 'RegionOne', description: '', name: 'OS_REGION_NAME'), disableConcurrentBuilds(), pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
+//  properties([parameters([string(defaultValue: 'https://access.openstack.rely.nl:5000/v2.0', description: '', name: 'OS_AUTH_URL'), string(defaultValue: 'lab', description: '', name: 'OS_TENANT_NAME'), string(defaultValue: '10593dbf4f8d4296a25cf942f0567050', description: '', name: 'OS_TENANT_ID'), string(defaultValue: 'RegionOne', description: '', name: 'OS_REGION_NAME'), disableConcurrentBuilds(), pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
+  withEnv(['OS_AUTH_URL=https://access.openstack.rely.nl:5000/v2.0', 'OS_TENANT_ID=10593dbf4f8d4296a25cf942f0567050', 'OS_TENANT_NAME=lab', 'OS_TENANT_NAME="lab"', 'OS_PROJECT_NAME="lab"', 'OS_REGION_NAME="RegionOne"'])
   withCredentials([usernamePassword(credentialsId: 'OS_CRED', passwordVariable: 'OS_PASSWORD', usernameVariable: 'OS_USERNAME')])
    stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
