@@ -41,5 +41,6 @@ node {
             }
          }
       }
+      step([$class: 'LogParserPublisher', failBuildOnError: true, projectRulePath: 'logparser', showGraphs: true, unstableOnWarning: true, useProjectRule: true])
    }
 }
