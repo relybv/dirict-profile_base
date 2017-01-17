@@ -1,4 +1,5 @@
 node {
+   wrap([$class: 'AnsiColorBuildWrapper']) {
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '3')), pipelineTriggers([pollSCM('H/15 * * * *')])])
    stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
@@ -40,4 +41,5 @@ node {
          }
       }
    }
+}
 }
