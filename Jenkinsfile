@@ -34,5 +34,4 @@ node {
       sh 'BEAKER_set="openstack-debian-78-x64" /usr/bin/bundle exec rake beaker_fixtures'
    }
    }
-   }
 }
