@@ -1,5 +1,5 @@
 node {
-  //  properties([parameters([string(defaultValue: 'https://access.openstack.rely.nl:5000/v2.0', description: '', name: 'OS_AUTH_URL'), string(defaultValue: 'lab', description: '', name: 'OS_TENANT_NAME'), string(defaultValue: '10593dbf4f8d4296a25cf942f0567050', description: '', name: 'OS_TENANT_ID'), string(defaultValue: 'paul.gomersbach', description: '', name: 'OS_USERNAME'), string(defaultValue: 'RegionOne', description: '', name: 'OS_REGION_NAME'), [$class: 'CredentialsParameterDefinition', credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: 'OS_PASSWORD', description: '', name: 'OS_PASSWORD', required: false]]), disableConcurrentBuilds(), pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
+  properties([parameters([string(defaultValue: 'https://access.openstack.rely.nl:5000/v2.0', description: '', name: 'OS_AUTH_URL'), string(defaultValue: 'lab', description: '', name: 'OS_TENANT_NAME'), string(defaultValue: '10593dbf4f8d4296a25cf942f0567050', description: '', name: 'OS_TENANT_ID'), string(defaultValue: 'paul.gomersbach', description: '', name: 'OS_USERNAME'), string(defaultValue: 'RegionOne', description: '', name: 'OS_REGION_NAME'), [$class: 'CredentialsParameterDefinition', credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: 'OS_PASSWORD', description: '', name: 'OS_PASSWORD', required: false]]), disableConcurrentBuilds(), pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
    stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/relybv/dirict-profile_base.git'
@@ -8,7 +8,6 @@ node {
       sh 'cd $WORKSPACE'
       sh '/usr/bin/bundle install --path vendor/bundle'
       sh '/opt/puppetlabs/puppet/bin/rake spec_prep'
-      sh 'echo $GIT_URL'
    }
    stage('Syntax') {
       sh '/usr/bin/bundle exec rake syntax'
@@ -27,15 +26,6 @@ node {
       publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'doc', reportFiles: 'index.html', reportName: 'HTML Report'])
    }
    stage('Acceptance Ubuntu') {
-      sh '. /var/lib/jenkins/stack'
-      sh 'printenv'
-      sh 'echo $OS_AUTH_URL'
-      sh 'echo $OS_TENANT_ID'
-      sh 'echo $OS_TENANT_NAME'
-      sh 'echo $OS_PROJECT_NAME'
-      sh 'echo $OS_USERNAME'
-      sh 'echo $OS_REGION_NAME'
-      sh 'echo $OS_PASSWORD'
       sh 'BEAKER_set="openstack-ubuntu-server-1404-x64" /usr/bin/bundle exec rake beaker_fixtures'
    }
    stage('Acceptance Debian') {
