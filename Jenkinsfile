@@ -27,6 +27,13 @@ node {
       publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'doc', reportFiles: 'index.html', reportName: 'HTML Report'])
    }
    stage('Acceptance Ubuntu') {
+      sh 'echo $OS_AUTH_URL'
+      sh 'echo $OS_TENANT_ID'
+      sh 'echo $OS_TENANT_NAME'
+      sh 'echo $OS_PROJECT_NAME'
+      sh 'echo $OS_USERNAME'
+      sh 'echo $OS_REGION_NAME'
+      sh 'echo $OS_PASSWORD'
       sh 'BEAKER_set="openstack-ubuntu-server-1404-x64" /usr/bin/bundle exec rake beaker_fixtures'
    }
    stage('Acceptance Debian') {
