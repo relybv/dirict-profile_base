@@ -27,6 +27,7 @@ node {
       publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'doc', reportFiles: 'index.html', reportName: 'HTML Report'])
    }
    stage('Acceptance Ubuntu') {
+      sh '. /var/lib/jenkins/stack'
       sh 'printenv'
       sh 'echo $OS_AUTH_URL'
       sh 'echo $OS_TENANT_ID'
