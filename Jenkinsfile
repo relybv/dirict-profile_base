@@ -17,8 +17,10 @@ node {
          sh '/usr/bin/bundle exec rake lint'
       }
       stage('Spec') {
-         sh '/opt/puppetlabs/puppet/bin/rake spec_clean'
-         sh '/usr/bin/bundle exec rake spec'
+         catchError {
+            sh '/opt/puppetlabs/puppet/bin/rake spec_clean'
+            sh '/usr/bin/bundle exec rake spec'
+         }
       }
       stage('Documentation') {
          sh '/opt/puppetlabs/bin/puppet resource package yard provider=puppet_gem'
