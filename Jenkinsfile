@@ -18,7 +18,8 @@ node {
       }
       stage('Spec') {
          sh '/opt/puppetlabs/puppet/bin/rake spec_clean'
-         sh '/usr/bin/bundle exec rake spec'
+      //    sh '/usr/bin/bundle exec rake spec'
+         def outspec = sh script: '/usr/bin/bundle exec rake spec', returnStdout: true
       }
       stage('Documentation') {
          sh '/opt/puppetlabs/bin/puppet resource package yard provider=puppet_gem'
