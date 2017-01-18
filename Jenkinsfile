@@ -41,5 +41,8 @@ node {
             }
          }
       }
+      stage('Logparsing') {
+        sh 'wget ${BUILD_URL}/consoleText'
+      }
    }
 }
