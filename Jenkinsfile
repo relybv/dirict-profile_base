@@ -42,7 +42,7 @@ node {
          }
       }
       stage('Logparsing') {
-        sh 'wget ${BUILD_URL}/consoleText'
+        sh 'curl "$JENKINS_URL/job/$JOB_NAME/lastBuild/consoleText'
       }
    }
 }
