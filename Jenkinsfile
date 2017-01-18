@@ -19,7 +19,6 @@ node {
       stage('Spec') {
          sh '/opt/puppetlabs/puppet/bin/rake spec_clean'
          sh '/usr/bin/bundle exec rake spec'
-         manager.listener.logger.println("I want to see this line in my job's output");
       }
       stage('Documentation') {
          sh '/opt/puppetlabs/bin/puppet resource package yard provider=puppet_gem'
@@ -41,9 +40,6 @@ node {
                sh 'BEAKER_set="openstack-debian-78-x64" /usr/bin/bundle exec rake beaker_fixtures'
             }
          }
-      }
-      stage('Logparsing') {
-        sh 'curl $JENKINS_URL/job/$JOB_NAME/lastBuild/consoleText'
       }
    }
 }
