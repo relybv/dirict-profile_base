@@ -15,7 +15,7 @@ describe 'profile_base' do
           let(:params) {{ }}
 
           it { is_expected.to compile.with_all_deps }
-          it { is_expected.to contain_class('profile_bas') }
+          it { is_expected.to contain_class('profile_base') }
           it { is_expected.to contain_class('profile_base::params') }
 
           case facts[:operatingsystem]
