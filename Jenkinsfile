@@ -9,7 +9,7 @@ node {
       }
       stage('Dependencies') {
          sh 'cd $WORKSPACE'
-         sh '/usr/bin/bundle install --path vendor/bundle'
+         sh '/usr/bin/bundle install --jobs=4 --path vendor/bundle'
          sh '/usr/bin/bundle exec rake spec_prep'
       }
       stage('Syntax') {
