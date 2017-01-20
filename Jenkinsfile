@@ -1,6 +1,6 @@
 node {
    wrap([$class: 'AnsiColorBuildWrapper']) {
-      properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '3')), pipelineTriggers([pollSCM('H/15 * * * *')])])
+      properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '6')), pipelineTriggers([pollSCM('H/15 * * * *')])])
       stage('Checkout') { // for display purposes
          // Clean workspace before checkout
          step ([$class: 'WsCleanup'])
@@ -10,7 +10,7 @@ node {
       stage('Dependencies') {
          sh 'cd $WORKSPACE'
          sh '/usr/bin/bundle install --path vendor/bundle'
-         sh '/opt/puppetlabs/puppet/bin/rake spec_prep'
+         sh '/usr/bin/bundle exec rake spec_prep'
       }
       stage('Syntax') {
          sh '/usr/bin/bundle exec rake syntax'
@@ -20,9 +20,11 @@ node {
       }
       stage('Spec') {
          catchError {
-            sh '/opt/puppetlabs/puppet/bin/rake spec_clean'
-            sh '/usr/bin/bundle exec rake spec'
+            sh '/usr/bin/bundle exec rake spec_clean'
+            sh '/usr/bin/bundle exec rake ci:all'
          }
+         step([$class: 'JUnitResultArchiver', testResults: 'spec/reports/*.xml'])
+         junit 'spec/reports/*.xml'
       }
       stage('Documentation') {
          sh '/opt/puppetlabs/bin/puppet resource package yard provider=puppet_gem'

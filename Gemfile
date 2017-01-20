@@ -11,6 +11,7 @@ group :test do
   gem 'rubocop', '0.33.0'
   gem 'simplecov', '>= 0.11.0'
   gem 'simplecov-console'
+  gem 'ci_reporter_rspec', '>= 1.0.0'
 
   gem "puppet-lint-leading_zero-check"
   gem "puppet-lint-trailing_comma-check"
