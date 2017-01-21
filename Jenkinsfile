@@ -12,25 +12,12 @@ node {
          sh '/usr/bin/bundle install --jobs=2 --path vendor/bundle'
          sh '/usr/bin/bundle exec rake spec_prep'
       }
-      parallel (
-         stage('Syntax') {
-            phase1: { sh '/usr/bin/bundle exec rake syntax' },
-         }
-         stage('Lint') {
-            phase2: { sh '/usr/bin/bundle exec rake lint' }
-         }
-      )
-      
-      // }
-      // stage('Lint') {
-      //   sh '/usr/bin/bundle exec rake lint'
-      // }
-      // )
-      stage('Spec') {
-         catchError {
-            sh '/usr/bin/bundle exec rake spec_clean'
-            sh '/usr/bin/bundle exec rake ci:all'
-         }
+      stage('Code quality') {
+         parallel (
+            syntax: { sh '/usr/bin/bundle exec rake syntax' },
+            lint: { sh '/usr/bin/bundle exec rake lint' },
+            spec: { sh '/usr/bin/bundle exec rake ci:all' }
+         )
          step([$class: 'JUnitResultArchiver', testResults: 'spec/reports/*.xml'])
          junit 'spec/reports/*.xml'
       }
