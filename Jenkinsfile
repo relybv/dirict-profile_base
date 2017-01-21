@@ -33,6 +33,7 @@ node {
             withCredentials([usernamePassword(credentialsId: 'OS_CERT', passwordVariable: 'OS_PASSWORD', usernameVariable: 'OS_USERNAME')]) {
                parallel (
                   ubuntu1404: { sh 'BEAKER_set="openstack-ubuntu-server-1404-x64" /usr/bin/bundle exec rake setbeaker_env' },
+                  ubuntu1604: { sh 'BEAKER_set="openstack-ubuntu-server-1604-x64" /usr/bin/bundle exec rake setbeaker_env' },
                   debian78: { sh 'BEAKER_set="openstack-debian-78-x64" /usr/bin/bundle exec rake setbeaker_env' }
                )
             }
