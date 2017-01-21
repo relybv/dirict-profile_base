@@ -21,7 +21,7 @@ node {
       // stage('Lint') {
       //   sh '/usr/bin/bundle exec rake lint'
       // }
-      )
+      // )
       stage('Spec') {
          catchError {
             sh '/usr/bin/bundle exec rake spec_clean'
