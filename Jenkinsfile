@@ -12,12 +12,12 @@ node {
          sh '/usr/bin/bundle install --jobs=2 --path vendor/bundle'
          sh '/usr/bin/bundle exec rake spec_prep'
       }
-      parallel (
       stage('Syntax') {
+      parallel (
          phase1: { sh '/usr/bin/bundle exec rake syntax' },
          phase2: { sh '/usr/bin/bundle exec rake lint' }
       )
-      }`
+      }
       // }
       // stage('Lint') {
       //   sh '/usr/bin/bundle exec rake lint'
