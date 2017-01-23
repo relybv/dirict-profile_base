@@ -26,18 +26,57 @@ node {
          sh '/opt/puppetlabs/puppet/bin/puppet strings'
          publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'doc', reportFiles: 'index.html', reportName: 'HTML Report'])
       }
-      stage('Acceptance tests') 
+      stage('Acceptance tests ubuntu 14.04') 
       {
          sh '/usr/bin/bundle exec rake spec_prep'
          withEnv(['OS_AUTH_URL=https://access.openstack.rely.nl:5000/v2.0', 'OS_TENANT_ID=10593dbf4f8d4296a25cf942f0567050', 'OS_TENANT_NAME=lab', 'OS_PROJECT_NAME=lab', 'OS_REGION_NAME=RegionOne']) {
             withCredentials([usernamePassword(credentialsId: 'OS_CERT', passwordVariable: 'OS_PASSWORD', usernameVariable: 'OS_USERNAME')]) {
-               parallel (
-                  ubuntu1404: { sh 'BEAKER_set="openstack-ubuntu-server-1404-x64" /usr/bin/bundle exec rake setbeaker_env' },
-                  ubuntu1604: { sh 'BEAKER_set="openstack-ubuntu-server-1604-x64" /usr/bin/bundle exec rake setbeaker_env' },
-                  debian78: { sh 'BEAKER_set="openstack-debian-78-x64" /usr/bin/bundle exec rake setbeaker_env' }
-               )
+                sh 'BEAKER_set="openstack-ubuntu-server-1404-x64" /usr/bin/bundle exec rake setbeaker_env > openstack-ubuntu-server-1404-x64.log'
+                try {
+                   // False if failures in logfile
+                   sh "grep --quiet Failures openstack-ubuntu-server-1404-x64.log"
+                   sh "grep -A100000 Failures openstack-ubuntu-server-1404-x64.log"
+                   currentBuild.result = 'FAILURE'
+                } catch (Exception err) {
+                   currentBuild.result = 'SUCCESS'
+                }
+            }
+         }
+      }
+      stage('Acceptance tests ubuntu 16.04')
+      {
+         sh '/usr/bin/bundle exec rake spec_prep'
+         withEnv(['OS_AUTH_URL=https://access.openstack.rely.nl:5000/v2.0', 'OS_TENANT_ID=10593dbf4f8d4296a25cf942f0567050', 'OS_TENANT_NAME=lab', 'OS_PROJECT_NAME=lab', 'OS_REGION_NAME=RegionOne']) {
+            withCredentials([usernamePassword(credentialsId: 'OS_CERT', passwordVariable: 'OS_PASSWORD', usernameVariable: 'OS_USERNAME')]) {
+                sh 'BEAKER_set="openstack-ubuntu-server-1604-x64" /usr/bin/bundle exec rake setbeaker_env > openstack-ubuntu-server-1604-x64.log'
+                try {
+                   // False if failures in logfile
+                   sh "grep --quiet Failures openstack-ubuntu-server-1604-x64.log"
+                   sh "grep -A100000 Failures openstack-ubuntu-server-1604-x64.log"
+                   currentBuild.result = 'FAILURE'
+                } catch (Exception err) {
+                   currentBuild.result = 'SUCCESS'
+                }
+            }
+         }
+      }
+      stage('Acceptance tests debian 78')
+      {
+         sh '/usr/bin/bundle exec rake spec_prep'
+         withEnv(['OS_AUTH_URL=https://access.openstack.rely.nl:5000/v2.0', 'OS_TENANT_ID=10593dbf4f8d4296a25cf942f0567050', 'OS_TENANT_NAME=lab', 'OS_PROJECT_NAME=lab', 'OS_REGION_NAME=RegionOne']) {
+            withCredentials([usernamePassword(credentialsId: 'OS_CERT', passwordVariable: 'OS_PASSWORD', usernameVariable: 'OS_USERNAME')]) {
+                sh 'BEAKER_set="openstack-debian-78-x64" /usr/bin/bundle exec rake setbeaker_env > openstack-debian-78-x64.log'
+                try {
+                   // False if failures in logfile
+                   sh "grep --quiet Failures openstack-debian-78-x64.log"
+                   sh "grep -A100000 Failures openstack-debian-78-x64.log"
+                   currentBuild.result = 'FAILURE'
+                } catch (Exception err) {
+                   currentBuild.result = 'SUCCESS'
+                }
             }
          }
       }
    }
+   archiveArtifacts '*.log'
 }
