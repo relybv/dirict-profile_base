@@ -5,6 +5,8 @@ require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'ci/reporter/rake/rspec'
 
+ENV['STRICT_VARIABLES'] = 'no'
+
 # These gems aren't always present, for instance
 # on Travis with --without development
 begin
