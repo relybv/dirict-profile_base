@@ -34,7 +34,7 @@ node {
                 sh 'BEAKER_set="openstack-debian-87-x64" /usr/bin/bundle exec rake setbeaker_env > openstack-debian-87-x64.log'
                 try {
                    // False if failures in logfile
-                   sh "grep --quiet Failures openstack-debian-87-x64.log"
+                   // sh "grep --quiet Failures openstack-debian-87-x64.log"
                    sh "grep -A100000 Failures openstack-debian-87-x64.log"
                    currentBuild.result = 'FAILURE'
                 } catch (Exception err) {
