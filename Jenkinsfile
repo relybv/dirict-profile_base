@@ -36,9 +36,9 @@ node {
                    // False if failures in logfile
                    sh "grep --quiet Failures openstack-debian-87-x64.log"
                    sh "grep -A100000 Failures openstack-debian-87-x64.log"
-                   currentBuild.result = 'SUCCESS'
-                } catch (Exception err) {
                    currentBuild.result = 'FAILURE'
+                } catch (Exception err) {
+                   currentBuild.result = 'SUCCESS'
                 }
             }
          }
