@@ -1,0 +1,15 @@
+HOSTS:
+  debian-87-x64:
+    roles:
+      - master
+    platform: debian-8-amd64
+    flavor: ha_localdisk.4c.16r.60h
+    hypervisor: openstack
+    image: "debian-8-amd64"
+    user: debian
+
+CONFIG:
+  log_level: info
+  type: foss
+  openstack_network: internal
+  color: false
