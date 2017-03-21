@@ -3,7 +3,7 @@ HOSTS:
     roles:
       - master
     platform: ubuntu-1404-amd64
-    flavor: ha_localdisk.1c.1r.20h
+    flavor: ha_localdisk.4c.16r.60h
     hypervisor: openstack
     image: "Ubuntu 14.04 LTS"
     user: ubuntu
