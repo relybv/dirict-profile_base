@@ -19,16 +19,16 @@ class profile_base
 
   case $::operatingsystem {
     'Windows': {
-      class { '::profile_base::windows::install': } ->
-      class { '::profile_base::windows::config': } ~>
-      class { '::profile_base::windows::service': } ->
-      Class['::profile_base']
+      class { '::profile_base::windows::install': }
+      -> class { '::profile_base::windows::config': }
+      ~> class { '::profile_base::windows::service': }
+      -> Class['::profile_base']
     }
     default: {
-      class { '::profile_base::install': } ->
-      class { '::profile_base::config': } ~>
-      class { '::profile_base::service': } ->
-      Class['::profile_base']
+      class { '::profile_base::install': }
+      -> class { '::profile_base::config': }
+      ~> class { '::profile_base::service': }
+      -> Class['::profile_base']
     }
   }
 
