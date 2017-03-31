@@ -27,6 +27,8 @@ describe 'profile_base' do
             it { is_expected.to contain_class('profile_base::install') }
             it { is_expected.to contain_class('profile_base::config') }
             it { is_expected.to contain_class('profile_base::service') }
+            it { is_expected.to contain_exec('create_fact_file') }
+            it { is_expected.to contain_exec('save_facts') }
           end
 
           case facts[:operatingsystem]
