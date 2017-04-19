@@ -30,7 +30,7 @@ end
 
 group :system_tests do
   gem "vagrant-wrapper"
-  gem "beaker"
+  gem "beaker", '3.9'
   gem "beaker-rspec"
   gem "beaker-puppet_install_helper"
 end
