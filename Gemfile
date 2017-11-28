@@ -3,7 +3,7 @@ source "https://rubygems.org"
 group :test do
   gem "rake", '< 11.0'
   gem "puppet", ENV['PUPPET_GEM_VERSION'] || ' > 3.8.0', '< 5.0'
-  gem "facter", '2.4.6'
+  gem "facter"
   gem "rspec"
   gem "rspec-puppet"
   gem "puppetlabs_spec_helper"
@@ -25,7 +25,7 @@ end
 
 group :system_tests do
 #  gem "vagrant-wrapper"
-  gem "beaker", '3.18'
+  gem "beaker"
   gem "beaker-rspec"
   gem "beaker-puppet_install_helper"
 end
