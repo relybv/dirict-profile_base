@@ -9,8 +9,6 @@ class profile_base::windows::install {
   }
 
   # install packages
-  include chocolatey
-  Package { provider => chocolatey, }
 
   # time keeping
   class { '::profile_base::windows::ntp': }
