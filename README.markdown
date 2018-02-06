@@ -19,7 +19,7 @@ A one-maybe-two sentence summary of what the module does/what problem it solves.
 ## Roles and Profiles
 
 Modules are generated using a module skeleton, this skeleton generates modules based on the 'Roles and Profiles' puppet pattern.
-For more information see the skeleton repository: https://github.com/pgomersbach/puppet-module-skeleton.git
+For more information see the skeleton repository: https://github.com/relybv/puppet-module-skeleton.git
 
 This module is genarated as a 'profile' and includes as a example the 'ntp' class.
 
