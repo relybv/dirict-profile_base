@@ -14,13 +14,6 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "Windows",
-      "operatingsystemrelease": [
-        "Server 2012 R2",
-        "7"
-      ]
-    },
-    {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "6",
